@@ -1,0 +1,33 @@
+/**
+ * 程序错误，运行时错误
+ */
+package com.brsc.ecommerceSys.exception;
+
+public class ApplicationExcrption extends RuntimeException {
+
+	public ApplicationExcrption() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public ApplicationExcrption(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ApplicationExcrption(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ApplicationExcrption(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ApplicationExcrption(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+		// TODO Auto-generated constructor stub
+	}
+
+}

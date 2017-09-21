@@ -1,0 +1,42 @@
+/**
+ * 
+ */
+package com.brsc.ecommerceSys.dao;
+
+import java.util.List;
+
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import com.brsc.ecommerceSys.domain.GoodsClass;
+import com.brsc.ecommerceSys.exception.ApplicationException;
+
+/**
+ * @author YuTian
+ *
+ */
+public class GoodsClassDaoSSHImpl extends HibernateDaoSupport implements GoodsClassDao {
+	
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.dao.GoodsClassDao#addGoodsClass(com.brsc.ecommerceSys.domain.GoodsClass)
+	 */
+	@Override
+	public void addGoodsClass(GoodsClass goodsClass) {
+		
+		this.getHibernateTemplate().save(goodsClass);
+		
+	}
+
+	@Override
+	public List<GoodsClass> loadAllParentGoodsClass() {
+		
+		List<GoodsClass> goodsClassList = (List<GoodsClass>)this.getHibernateTemplate().find("from GoodsClass g where g.pGoodsClass.goodsClassNo is null");
+//		System.out.println(goodsClassList);
+		return goodsClassList;
+	}
+
+	@Override
+	public List<GoodsClass> loadAll() {
+		return this.getHibernateTemplate().find("from GoodsClass g order by g.goodsClassNo desc");
+	}
+
+}

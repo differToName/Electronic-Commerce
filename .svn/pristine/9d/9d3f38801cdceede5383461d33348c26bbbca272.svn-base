@@ -1,0 +1,50 @@
+/**
+ * 
+ */
+package com.brsc.ecommerceSys.domain;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * 商品类别类
+ * @author YuTian
+ *
+ */
+public class GoodsClass extends BaseOfValue {
+	
+	/**类别编号*/
+	private Integer goodsClassNo;
+	/**父类别*/
+	private GoodsClass pGoodsClass = null;
+	/**类别名称*/
+	private String goodsClassName;
+	/**保存子类*/
+	private Set<GoodsClass> categories = new HashSet<GoodsClass>();
+	
+	public Integer getGoodsClassNo() {
+		return goodsClassNo;
+	}
+	public void setGoodsClassNo(Integer goodsClassNo) {
+		this.goodsClassNo = goodsClassNo;
+	}
+	public GoodsClass getpGoodsClass() {
+		return pGoodsClass;
+	}
+	public void setpGoodsClass(GoodsClass pGoodsClass) {
+		this.pGoodsClass = pGoodsClass;
+	}
+	public String getGoodsClassName() {
+		return goodsClassName;
+	}
+	public void setGoodsClassName(String goodsClassName) {
+		this.goodsClassName = goodsClassName;
+	}
+	public Set<GoodsClass> getCategories() {
+		return categories;
+	}
+	public void setCategories(Set<GoodsClass> categories) {
+		this.categories = categories;
+	}
+	
+}

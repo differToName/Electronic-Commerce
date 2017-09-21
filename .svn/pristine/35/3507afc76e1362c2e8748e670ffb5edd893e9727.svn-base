@@ -1,0 +1,11 @@
+#pageinfo{
+	font-size:15px;
+	font-family:"Î¢ÈíÑÅºÚ";
+	position:fixed;
+	right:50px;
+	bottom:50px;
+}
+
+#pageinfo span{
+	cursor:pointer;
+}

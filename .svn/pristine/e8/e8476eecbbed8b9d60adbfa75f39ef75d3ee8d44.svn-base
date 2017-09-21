@@ -1,0 +1,68 @@
+function preview(picPath){
+	document.getElementById("goodsPreview").src=picPath;
+}
+
+function changeGoodsClass(parentGoodsClassNo){
+	
+    var parentGoodsClass= document.getElementById("parentGoodsClass");
+    var index=parentGoodsClass.selectedIndex;
+    var parentGoodsClassNo = parentGoodsClass.options[index].value;  
+
+    alert(parentGoodsClassNo);
+    doAjax("goods/loadChildGoodsClass.do?parentGoodsClassNo="+parentGoodsClassNo);
+    
+}
+
+var xmlhttp;
+
+function ck(){
+    if(window.XMLHttpRequest){
+        xmlhttp=new XMLHttpRequest;
+    }else if(window.ActiveObject){
+        xmlhttp=new ActiveObject("Microsoft.XMLHTTP");
+    }
+    
+}
+
+function doAjax(url){
+//		alert("123");
+        ck();
+
+        if(xmlhttp!=null){
+        	
+            xmlhttp.open("POST",url,true);//初始化请求参数
+            xmlhttp.onreadystatechange=ok;//指定回调函数
+            xmlhttp.send(null);
+            
+        }else{
+            alert("xmlhttp初始化失败！！！");
+        }
+  }
+
+function ok(){
+    //判断响应状态
+    if(xmlhttp.readyState==4){
+        if(xmlhttp.status==200){
+//        	alert(xmlhttp.responseText);
+            excute(xmlhttp.responseText);
+        }
+    }
+}
+
+function excute(status){
+	
+/*	var option = null;
+	var no_result = status.split("|")[0];
+	var name_result = status.split("|")[1];
+	
+	var no = no_result.split("_");
+	var name = name_result = status.split("_");
+	
+	var goodsClass= document.getElementById("goodsClass");
+	
+    for ( var i = 0; i < no.length; i++) {  
+        option = new Option(name[i], no[i]);  
+        goodsClass.options.add(option);  
+    } */
+    
+}

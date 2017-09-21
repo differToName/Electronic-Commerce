@@ -1,0 +1,32 @@
+package com.brsc.ecommerceSys.dao;
+
+import com.brsc.ecommerceSys.domain.User;
+
+public class UserDaoSSHImpl implements UserDao {
+
+	@Override
+	public void addUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteUser(Integer userNo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public User checkUser(String userName, String UserPWD) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

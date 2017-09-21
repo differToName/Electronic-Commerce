@@ -1,0 +1,86 @@
+package com.brsc.ecommerceSys.action;
+
+import java.io.Console;
+import java.util.List;
+
+import com.brsc.ecommerceSys.domain.User;
+import com.brsc.ecommerceSys.helper.UserHelper;
+import com.brsc.ecommerceSys.service.UserService;
+import com.brsc.ecommerceSys.utils.Page;
+
+public class UserAction extends BaseOfAction{
+
+	private User user=null;
+	private List<User> userList=null;
+	private UserService userService=null;
+	private Page page=new Page();
+	UserHelper userHelper=new UserHelper();
+	
+	public Page getPage() {
+		return page;
+	}
+	public void setPage(Page page) {
+		this.page = page;
+	}
+	public UserHelper getUserHelper() {
+		return userHelper;
+	}
+	public void setUserHelper(UserHelper userHelper) {
+		this.userHelper = userHelper;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public UserService getUserService() {
+		return userService;
+	}
+	public List<User> getUserList() {
+		return userList;
+	}
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	
+	/**去输入界面*/
+	public String toReg() throws Exception{
+		return "to_reg_user";
+	}
+	
+	/**未加入重复验证*/
+	public String createUser() throws Exception{
+		
+		System.out.println(user);
+		userService.addUser(user);
+		return "to_list_users";
+	}
+	
+	public String loadUsers() throws Exception{
+		
+		page=userService.loadPageOfUsers(userHelper, page);
+		System.out.println("page:"+page.getPageContent().toString());
+		return "to_list_users";
+	}
+	
+	public String toChangeStatus() throws Exception{
+		
+		User newUser=userService.searchUserByNo(user.getUserNo());
+		System.out.println(newUser);
+		newUser.setUserStatus(user.getUserStatus());
+		userService.modifyUser(newUser);
+		return "to_list_users";
+	}
+	
+	public String updateUser() throws Exception{
+		
+		System.out.println(user);
+		
+		//return "to_list_users";
+		return null;
+	}
+}

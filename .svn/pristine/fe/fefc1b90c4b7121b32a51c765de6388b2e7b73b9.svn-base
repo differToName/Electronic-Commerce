@@ -1,0 +1,85 @@
+/**
+ * 
+ */
+package com.brsc.ecommerceSys.dao;
+
+import java.util.List;
+
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import com.brsc.ecommerceSys.domain.GoodsClass;
+
+/**
+ * @author YuTian
+ *
+ */
+public class GoodsClassDaoSSHImpl extends HibernateDaoSupport implements GoodsClassDao {
+	
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.dao.GoodsClassDao#addGoodsClass(com.brsc.ecommerceSys.domain.GoodsClass)
+	 */
+	@Override
+	public void addGoodsClass(GoodsClass goodsClass) {
+		
+		this.getHibernateTemplate().save(goodsClass);
+		
+	}
+
+	@Override
+	public List<GoodsClass> loadAllParentGoodsClass() {
+		
+		List<GoodsClass> goodsClassList = (List<GoodsClass>)this.getHibernateTemplate().find("from GoodsClass g where g.parentGoodsClass.goodsClassNo is null or g.parentGoodsClass.goodsClassNo =1");
+//		System.out.println(goodsClassList);
+		return goodsClassList;
+	}
+
+	@Override
+	public List<GoodsClass> loadAll() {
+		return this.getHibernateTemplate().find("from GoodsClass g order by g.goodsClassNo desc");
+	}
+
+	@Override
+	public void deleteGoodsClassByNo(Integer goodsClassNo) {
+		
+		GoodsClass goodsClass = (GoodsClass)this.getHibernateTemplate().load(GoodsClass.class, goodsClassNo);
+		this.getHibernateTemplate().delete(goodsClass);
+		
+	}
+
+	@Override
+	public void updateGoodsClass(GoodsClass goodsClass) {
+		
+		this.getHibernateTemplate().update(goodsClass);
+		
+	}
+
+	@Override
+	public GoodsClass getGoodsClassByNo(Integer goodsClassNo) {
+		return (GoodsClass)this.getHibernateTemplate().get(GoodsClass.class, goodsClassNo);
+	}
+
+	@Override
+	public Boolean checkName(String goodsClassName, Integer pGoodsClassNo) {
+		
+		List<GoodsClass> goodsClassList=null;
+		
+		if(pGoodsClassNo!=1){
+			goodsClassList = (List<GoodsClass>)this.getHibernateTemplate().find("from GoodsClass g where g.parentGoodsClass.goodsClassNo ="+pGoodsClassNo);
+			
+			for(GoodsClass goodsClass : goodsClassList){
+				if(goodsClass.getGoodsClassName()==goodsClassName)
+					return false;
+			}
+		}else{
+			goodsClassList = (List<GoodsClass>)this.getHibernateTemplate().find("from GoodsClass g where g.parentGoodsClass.goodsClassNo =1");
+			
+			for(GoodsClass goodsClass : goodsClassList){
+				if(goodsClass.getGoodsClassName().equals(goodsClassName))
+					return false;
+			}
+		}
+		
+		return true;
+	}
+
+}

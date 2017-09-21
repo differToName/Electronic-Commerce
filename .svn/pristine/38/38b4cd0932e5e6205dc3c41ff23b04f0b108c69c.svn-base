@@ -1,0 +1,51 @@
+package com.brsc.ecommerceSys.action;
+
+import java.util.List;
+
+import com.brsc.ecommerceSys.domain.User;
+import com.brsc.ecommerceSys.service.UserService;
+
+public class UserAction extends BaseOfAction{
+
+	private User user=null;
+	private List<User> userList=null;
+	private UserService userService=null;
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public UserService getUserService() {
+		return userService;
+	}
+	public List<User> getUserList() {
+		return userList;
+	}
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+	
+	/**去输入界面*/
+	public String toReg() throws Exception{
+		return "to_reg_user";
+	}
+	
+	public String createUser() throws Exception{
+		
+		System.out.println(user);
+		userService.addUser(user);
+		return "to_list_users";
+	}
+	
+	public String loadUsers() throws Exception{
+		
+		userList=userService.loadUsers();
+		
+		return "to_list_users";
+	}
+}

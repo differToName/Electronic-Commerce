@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.brsc.ecommerceSys.domain">
+
+   <class name="GoodsClass" table="tb_goods_class">
+      
+      <id name="goodsClassNo" type="java.lang.Integer" column="goods_class_no">
+      		<generator class="native">         
+                <param name="sequence">seq_goods_class_no</param>
+            </generator>
+          <!-- <generator class="native"></generator>  主键生成策略 -->
+      </id>
+      <property name="goodsClassName" column="goods_class_name" type="java.lang.String" length="15"></property>
+ <!--      <property name="parentGoodsClassNo" column="p_goods_class_no" type="java.lang.Integer" insert="false" update="false"></property> -->
+      <many-to-one name="parentGoodsClass"  class="GoodsClass" fetch="select">
+      	<column name="p_goods_class_no"></column>
+      </many-to-one>
+      <set name="categories" inverse="true" cascade="delete">
+      	<key>
+      		<column name="p_goods_class_no"/>
+      	</key>
+      	<one-to-many class="GoodsClass"></one-to-many>
+      </set>   
+   </class>
+
+</hibernate-mapping>

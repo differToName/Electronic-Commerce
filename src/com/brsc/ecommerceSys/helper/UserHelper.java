@@ -1,0 +1,35 @@
+package com.brsc.ecommerceSys.helper;
+/**
+ * 用户查找工具
+ * @author wanlong
+ *
+ */
+public class UserHelper {
+	private String userName;
+	private String userSex;
+	private String userStatus;//用户账户状态
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserSex() {
+		return userSex;
+	}
+	public void setUserSex(String userSex) {
+		this.userSex = userSex;
+	}
+	public String getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+	@Override
+	public String toString() {
+		return "UserHelper [userName=" + userName + ", userSex=" + userSex + ", userStatus=" + userStatus + "]";
+	}
+	
+	
+}

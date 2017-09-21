@@ -1,0 +1,133 @@
+package com.brsc.ecommerceSys.dao;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import com.brsc.ecommerceSys.domain.Order;
+import com.brsc.ecommerceSys.helper.OrderHelper;
+
+
+
+public class OrderDaoSSHImpl extends HibernateDaoSupport implements OrderDao {
+
+	@Override
+	public void addOrder(Order order) {
+		
+		try{
+			this.getHibernateTemplate().save(order);
+		} catch(Exception e){
+			System.out.println(e);
+		}
+	
+	}
+
+	@Override
+	public Order getOrderById(Integer orderNo) {
+		
+		return (Order)this.getHibernateTemplate().get(Order.class, orderNo);
+	}
+
+	@Override
+	public List<Order> loadAll() {
+		
+		return this.getHibernateTemplate().find("from Order o order by o.orderNo desc");
+	}
+	
+	//获取离线DetachedCriteria组合查询
+		private DetachedCriteria genCriteriaByHelper(OrderHelper helper){
+			
+			DetachedCriteria criteria=DetachedCriteria.forClass(Order.class);
+			criteria.addOrder(org.hibernate.criterion.Order.asc("orderNo"));//筛选结果排序：按订单编号从小到大
+			
+			if(helper==null)//避免空指针
+				return criteria;
+			
+			if(StringUtils.isNotEmpty(helper.getQryUserNo())){
+				criteria.createCriteria("user").add(Restrictions.eq("userNo", helper.getQryUserNo())); //sub criteria
+			}
+			
+			if(helper.getQryMaxOrderDate()!=null){
+				criteria.add(Restrictions.le("orderDate", helper.getQryMaxOrderDate()));
+			}
+			
+			if(helper.getQryMinOrderDate()!=null){
+				criteria.add(Restrictions.ge("orderDate", helper.getQryMinOrderDate()));
+			}
+			
+			if(helper.getQryGoodsNo()!=null){
+				criteria.createCriteria("goods").add(Restrictions.eq("goodsNo", helper.getQryGoodsNo())); //sub criteria
+			}
+			
+			if(StringUtils.isNotEmpty(helper.getQryAuditStatu())){
+				criteria.add(Restrictions.eq("auditStatu", helper.getQryAuditStatu()));
+			}
+			
+			return criteria;
+		}
+
+	@Override
+	public Long cntOrders(OrderHelper helper) {
+		
+		DetachedCriteria detachedCriteria=this.genCriteriaByHelper(helper);//获取离线criteria
+		
+		detachedCriteria.setProjection(Projections.rowCount());//相当于select count(*)
+		
+		Session session=this.getSession();
+		Transaction trans=session.beginTransaction();
+		long cnt =0;
+		
+		try {
+			Criteria criteria=detachedCriteria.getExecutableCriteria(session);
+			cnt=Long.parseLong(criteria.list().get(0).toString());
+			trans.commit();
+		} catch (HibernateException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			trans.rollback();
+		}finally{
+			if(session.isOpen())
+				session.close();
+		}
+		
+		return cnt;
+	}
+
+	@Override
+	public List<Order> loadScopeOrders(OrderHelper helper, int startInd, int size) {
+		
+		Session session=this.getSession();
+		Transaction trans=session.beginTransaction();
+		List<Order> orderList=null;
+		
+		try {
+			DetachedCriteria detachedCriteria=this.genCriteriaByHelper(helper);
+			Criteria criteria=detachedCriteria.getExecutableCriteria(session);//绑定session
+			orderList=criteria.setFirstResult(startInd).setMaxResults(size).list();
+			trans.commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			trans.rollback();
+		}finally{
+			if(session.isOpen())
+				session.close();
+		}
+		
+		return orderList;
+	}
+
+	@Override
+	public void updateOrder(Order order) {
+		
+		this.getHibernateTemplate().update(order);
+	}
+
+}

@@ -1,0 +1,109 @@
+package com.brsc.ecommerceSys.domain;
+
+import java.util.Date;
+
+/**
+ * 订单类
+ * @author wls
+ *
+ */
+public class Order extends BaseOfValue {
+	
+	private Integer orderNo;  //订单编号
+	private String userNo;  //用户账号
+	private Date orderDate;  //订单日期
+	private Integer goodsNo;  //商品编号
+	private String auditStatu; //订单审核状态(Y-已审核 N-未审核)
+	private Date auditDate;  //审核日期
+	private String deliveryAddress;  //收货地址
+	private String goodsConsignee;  //收货人姓名
+	private String consigneePhone;  //收货人电话
+	private Integer buyNumbers;  //购买数量
+	private Double buyCounts;  //订单金额
+	private String orderStatus;  //订单状态(G-收货 N-未收货 R-退货)
+	
+	public Integer getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(Integer orderNo) {
+		this.orderNo = orderNo;
+	}
+	public String getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
+	}
+	public Date getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+	public Integer getGoodsNo() {
+		return goodsNo;
+	}
+	public void setGoodsNo(Integer goodsNo) {
+		this.goodsNo = goodsNo;
+	}
+	public String getAuditStatu() {
+		return auditStatu;
+	}
+	public void setAuditStatu(String auditStatu) {
+		this.auditStatu = auditStatu;
+	}
+	public Date getAuditDate() {
+		return auditDate;
+	}
+	public void setAuditDate(Date auditDate) {
+		this.auditDate = auditDate;
+	}
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
+	}
+	public String getGoodsConsignee() {
+		return goodsConsignee;
+	}
+	public void setGoodsConsignee(String goodsConsignee) {
+		this.goodsConsignee = goodsConsignee;
+	}
+	public String getConsigneePhone() {
+		return consigneePhone;
+	}
+	public void setConsigneePhone(String consigneePhone) {
+		this.consigneePhone = consigneePhone;
+	}
+	public Integer getBuyNumbers() {
+		return buyNumbers;
+	}
+	public void setBuyNumbers(Integer buyNumbers) {
+		this.buyNumbers = buyNumbers;
+	}
+	public Double getBuyCounts() {
+		return buyCounts;
+	}
+	public void setBuyCounts(Double buyCounts) {
+		this.buyCounts = buyCounts;
+	}
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	
+	@Override
+	public String toString() {
+		return "Order [orderNo=" + orderNo + ", userNo=" + userNo
+				+ ", orderDate=" + orderDate + ", goodsNo=" + goodsNo
+				+ ", auditStatu=" + auditStatu + ", auditDate=" + auditDate
+				+ ", deliveryAddress=" + deliveryAddress + ", goodsConsignee="
+				+ goodsConsignee + ", consigneePhone=" + consigneePhone
+				+ ", buyNumbers=" + buyNumbers + ", buyCounts=" + buyCounts
+				+ ", orderStatus=" + orderStatus + "]";
+	}
+	
+}

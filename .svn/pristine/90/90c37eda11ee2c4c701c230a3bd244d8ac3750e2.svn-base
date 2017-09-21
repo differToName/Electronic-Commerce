@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.brsc.ecommerceSys.domain">
+
+   <class name="Order" table="tb_order">
+      
+      <id name="orderNo" type="java.lang.Integer" column="order_no">
+          <!-- <generator class="native"></generator>  主键生成策略 -->
+      </id>
+      <property name="userNo"  column="user_no"  type="java.lang.String"></property>
+      <property name="orderDate"  column="order_date"  type="date"></property>
+      <property name="goodsNo"  column="goods_no"  type="java.lang.Integer"></property>
+      <property name="auditStatu"  column="audit_statu"  type="java.lang.String"></property>
+      <property name="auditDate"  column="audit_date"  type="date"></property>
+      <property name="deliveryAddress"  column="delivery_address"  type="java.lang.String"></property>
+      <property name="goodsConsignee"  column="goods_consignee"  type="java.lang.String"></property>
+      <property name="consigneePhone"  column="consignee_phone"  type="java.lang.String"></property>
+      <property name="buyNumbers"  column="buy_numbers"  type="java.lang.Integer"></property>
+      <property name="buyCounts"  column="buy_counts"  type="java.lang.Double"></property>
+      <property name="orderStatus"  column="order_status"  type="java.lang.String"></property>
+      
+   </class>
+
+</hibernate-mapping>

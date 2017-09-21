@@ -1,0 +1,11 @@
+package com.brsc.ecommerceSys.helper;
+/**
+ * 用户查找工具
+ * @author wanlong
+ *
+ */
+public class UserHelper {
+
+
+
+}

@@ -1,0 +1,61 @@
+function checkName(){
+	
+    var goodsClassName=document.getElementById("goodsClassName");
+    var parentGoodsClass= document.getElementById("parentGoodsClass");
+    var index=parentGoodsClass.selectedIndex;
+    var parentGoodsClassNo = parentGoodsClass.options[index].value;  
+
+    if(!goodsClassName.value){
+    	 var span=document.getElementById("span");
+    	 span.innerHTML="类别名不能为空";
+    }else{
+//    	alert(parentGoodsClassNo+goodsClassName.value);
+
+//        var submit = document.getElementById("submit");
+//        submit.removeAttribute("disabled");
+        doAjax("goodsClass/checkName.do?goodsClass.goodsClassName="+goodsClassName.value+"&&goodsClass.parentGoodsClass.goodsClassNo="+parentGoodsClassNo);
+    }
+}
+
+var xmlhttp;
+
+function ck(){
+    if(window.XMLHttpRequest){
+        xmlhttp=new XMLHttpRequest;
+    }else if(window.ActiveObject){
+        xmlhttp=new ActiveObject("Microsoft.XMLHTTP");
+    }
+    
+}
+
+function doAjax(url){
+//		alert("123");
+        ck();
+
+        if(xmlhttp!=null){
+        	
+            xmlhttp.open("POST",url,true);//初始化请求参数
+            xmlhttp.onreadystatechange=ok;//指定回调函数
+            xmlhttp.send(null);
+            
+        }else{
+            alert("xmlhttp初始化失败！！！");
+        }
+  }
+
+function ok(){
+    //判断响应状态
+    if(xmlhttp.readyState==4){
+        if(xmlhttp.status==200){
+//        	alert(xmlhttp.responseText);
+            excute(xmlhttp.responseText);
+        }
+    }
+}
+
+function excute(status){
+    var span=document.getElementById("span");
+    span.innerHTML=status;
+    span.style.display="block";
+    
+}

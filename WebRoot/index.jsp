@@ -1,0 +1,132 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>电商后台管理系统</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<link rel="stylesheet" type="text/css" href="<c:url value="/libs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>">
+	
+	<!-- Custom CSS -->
+	<link href="<c:url value="/libs/indexLibs/css/style.css"/>" rel='stylesheet' type='text/css' />
+	<link href="<c:url value="/libs/indexLibs/css/font-awesome.css"/>" rel="stylesheet"> 
+	
+	<link rel="stylesheet" href="<c:url value="/libs/indexLibs/css/icon-font.min.css"/>" type='text/css' />
+	
+	<script src="<c:url value="/libs/jquery/jquery-3.2.1.js"/>"></script>
+	
+	<script type="text/javascript">
+		function logout() {
+			if (confirm("您真的确定要退出？")) {
+				location.href = "<s:url namespace='/manager' action='managerLogout'/>";
+			}
+		}
+	</script>
+  </head>
+  
+  <body>
+   <div class="page-container">
+		<!-- content-inner -->
+		<div class="left-content">
+			<div class="inner-content">
+				<!-- header-start -->
+				<div class="header-section">
+					<div class="top_bg">
+						<div class="header_top">
+							<div class="top_left">
+								<h2>电子商务系统管理后台</h2>
+							</div>
+							<div class="top_right"></div>
+						</div>
+
+					</div>
+					
+				</div>
+
+
+				<div class="logo">
+					<a href="index.html"><img
+						src="<c:url value="/libs/indexLibs/images/logo1.png"/>"
+						class="img-responsive" alt=""></a>
+				</div>
+
+				<div class="log">
+					<div class="login">
+						<div id="loginContainer">
+							<span> 操作员:${loginManager.managerName}&nbsp;</span>
+							 <button id="loginButton" class="btn" onclick="logout()">退出</button>
+							
+						</div>
+					</div>
+				</div>
+
+				<!-- 4:3 aspect ratio -->
+				<div >
+					<iframe name="contentFrame" id="contentFrame" width="99%" scrolling="no" height="800px" frameborder="0" class="contentFrame" allowtransparency="true" src="<c:url value='/welcome.jsp'/>"></iframe>
+				</div>
+			</div>
+			
+		</div>
+		<!-- content-inner end -->
+		<!-- sidebar-menu -->
+		<div class="sidebar-menu">
+			<header class="logo1">
+				<a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span> </a>
+			</header>
+			
+			<div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+			<c:if test="${loginManager!=null}">
+			<div class="menu">
+				<ul id="menu">
+					<li><a href="index.html"><i class="fa fa-table"></i> <span>HOME</span></a></li>
+					<li><a href="#"><i class="fa fa-table"></i> <span>HOME</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+						<ul id="menu-academico-sub" >
+						<li id="menu-academico-avaliacoes" ><a href="shoes.html">1</a></li>
+						<li id="menu-academico-avaliacoes" ><a href="products.html">2</a></li>
+					    <li id="menu-academico-boletim" ><a href="sunglasses.html">3</a></li>
+					    </ul>					
+					</li>
+					<li><a href="index.html"><i class="fa fa-table"></i> <span>HOME</span></a></li>
+					<li><a href="index.html"><i class="fa fa-table"></i> <span>HOME</span></a></li>
+					<li><a href="index.html"><i class="fa fa-table"></i> <span>HOME</span></a></li>
+					<li><a href="<s:url namespace="/order" action="loadOrders"/>" target="contentFrame"><i class="fa fa-table"></i><span> 订单管理</span></a>
+					</li>
+					
+					<li><a href="<s:url namespace="/user" action="loadUsers"/>" target="contentFrame"> <i class="fa fa-users"></i><span> 用户查找/管理</span></a>	
+					</li>
+					
+					<c:if test="${loginManager.managerPosition=='M'}">
+						<li>
+							<a href="#">&nbsp;<i class="fa fa-male"></i><span> 管理员管理</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+							<ul id="menu-academico-sub">
+								<li id="menu-academico-avaliacoes"><a href="<s:url namespace="/manager" action="toReg"/>" target="contentFrame">管理员添加</a></li>
+								<li id="menu-academico-avaliacoes"><a href="<s:url namespace="/manager" action="loadManagers"/>" target="contentFrame">管理员查询/修改</a></li>
+							</ul>
+						</li>
+					</c:if>
+					
+					<li><a href="<s:url namespace="/manager" action="showManager"/>" target="contentFrame">&nbsp;<i class="fa fa-file-text"></i> <span>个人资料管理</span></a></li>
+					<li><a href="<s:url namespace="/manager" action="toModifyPWD"/>" target="contentFrame">&nbsp;<i class="glyphicon glyphicon-cog"></i> <span>密码修改</span></a></li>
+				</ul>
+			</div>
+			</c:if>
+		</div>
+			<div class="clearfix"></div>
+			<script type="text/javascript" src="<c:url value="/libs/indexLibs/js/scripts.js"/>"></script>
+			
+	</div>		
+		
+  </body>
+</html>

@@ -1,0 +1,92 @@
+/**
+ * 
+ */
+package com.brsc.ecommerceSys.service;
+
+import java.util.List;
+
+import com.brsc.ecommerceSys.dao.ManagerDao;
+import com.brsc.ecommerceSys.domain.Manager;
+import com.brsc.ecommerceSys.exception.ApplicationException;
+import com.brsc.ecommerceSys.helper.ManagerHelper;
+import com.brsc.ecommerceSys.utils.Page;
+
+/**
+ * @author wanlong
+ *
+ */
+public class ManagerServiceSSHImpl implements ManagerService {
+
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.service.ManagerService#addManager(com.brsc.ecommerceSys.domain.Manager)
+	 */
+	private ManagerDao managerDao=null;
+	
+	public void setManagerDao(ManagerDao managerDao) {
+		this.managerDao = managerDao;
+	}
+
+	@Override
+	public void addManager(Manager manager) {
+		try {
+			managerDao.addManager(manager);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ApplicationException("service 错误，添加管理员时错误");
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.service.ManagerService#deleteManager(java.lang.String)
+	 */
+	@Override
+	public void deleteManager(String managerNo) {
+		managerDao.deleteManager(managerNo);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.service.ManagerService#modifyManager(com.brsc.ecommerceSys.domain.Manager)
+	 */
+	@Override
+	public void modifyManager(Manager manager) {
+		managerDao.updateManager(manager);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.service.ManagerService#loadManagers()
+	 */
+	@Override
+	public List<Manager> loadManagers() {
+		
+		return managerDao.loadManagers();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.service.ManagerService#searchManagerByNo(java.lang.String)
+	 */
+	@Override
+	public Manager searchManagerByNo(String managerNo) {
+		// TODO Auto-generated method stub
+		return managerDao.searchManagerByNo(managerNo);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.service.ManagerService#selectManagers(com.brsc.ecommerceSys.helper.ManagerHelper)
+	 */
+	@Override
+	public List<Manager> selectManagers(ManagerHelper managerHelper) {
+		// TODO Auto-generated method stub
+		return managerDao.selectManagers(managerHelper);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.brsc.ecommerceSys.service.ManagerService#loadPageOfManagers(com.brsc.ecommerceSys.helper.ManagerHelper, com.brsc.ecommerceSys.utils.Page)
+	 */
+	@Override
+	public Page loadPageOfManagers(ManagerHelper managerHelper, Page page) {
+		page.setTotalRecNum(managerDao.cntManagersByHelper(managerHelper));
+		page.setPageContent(managerDao.loadScopeManagersByHelper(managerHelper, page.getStartIndex(), page.getEndIndex()-page.getStartIndex()));
+		return page;
+	}
+
+}

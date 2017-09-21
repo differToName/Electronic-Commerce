@@ -1,0 +1,124 @@
+--用户表
+create table tb_user(
+	user_no	varchar2(10) primary key,
+	user_name varchar2(15) not null,
+	user_password varchar2(15) not null,
+	user_realName varchar2(10) not null,
+	user_birthday date not null,
+	user_mailbox varchar2(20) not null,
+	user_phone char(11) not null,
+	user_address varchar2(100) not null,
+	user_postcode varchar2(6) not null,
+	user_status char(1) not null
+);
+--对应序列 seq_user_no
+ create sequence seq_user_no
+    maxvalue 999999999
+    start with 100000000
+    increment by 1
+    cache 20;
+    
+--对应触发器
+create or replace trigger user_trigger
+       before insert on tb_user
+       for each row
+       begin
+       select seq_user_no.nextval into :new.user_no from dual;
+       end;
+       /
+insert into tb_user values(seq_user_no.nextval,'一号用户','123456','张灿',to_date('1996-09-16','yyyy-mm-dd'),'0001@qq.com','18980622209','学园路三号','350010','A');
+
+--管理员表
+create table tb_manager(
+	manager_no	varchar2(10) primary key,
+	manager_name varchar2(15) not null,
+	manager_password varchar2(15) not null,
+	manager_realName varchar2(10) not null,
+	manager_birthday date not null,
+	manager_maibox varchar2(20) not null,
+	manager_phone char(11) not null,
+	manager_address varchar2(100) not null,
+	manager_postcode number(6) not null,
+	manager_position char(1) not null
+);
+
+--对应序列	seq_manager_no
+create sequence seq_manager_no
+   maxvalue 9999999999
+   start with 5000000000
+   increment by 1
+   cache 20;
+
+--商品类别表
+create table tb_goods_class(
+	goods_class_no int primary key,
+	p_goods_class_no unique,
+	goods_class_name varchar2(15) not null,
+	foreign key(p_goods_class_no) references tb_goods_class(goods_class_no)
+);
+
+--商品表
+CREATE TABLE tb_goods(
+  goods_no INT PRIMARY KEY,
+  goods_name VARCHAR2(15) NOT NULL UNIQUE,
+  goods_class_no INT NOT NULL
+  CONSTRAINT tg_fk_tgc REFERENCES tb_goods_class(goods_class_no),
+  goods_inventory INT DEFAULT 0 NOT NULL ,  --商品库存量
+  goods_price NUMBER(9,2),       --商品单价
+  goods_picture BLOB,     --商品图片
+  goods_discription VARCHAR2(200),    --商品描述
+  goods_status CHAR(1) CHECK(goods_status IN('Y','N'))  --商品状态
+);
+
+--订单表
+create table tb_order(
+	order_no int primary key,
+	user_no varchar2(10),
+	goods_no int not null,
+	order_date date not null,
+	audit_statu char(1), 
+	audit_date date not null,--审核时间
+	delivery_address varchar2(100) not null,--收货地址
+	goods_consignee varchar2(10) not null,--收货人
+	consignee_phone varchar2(11) not null,--收货人电话
+	buy_numbers int not null,--购买数量
+	buy_counts number(10,2) not null,--花费金额
+	order_status char(1) not null,--订单状态G-收货 N-未收货 R-退货
+	foreign key(user_no) references tb_user(user_no),
+	foreign key(goods_no) references tb_goods(goods_no)
+);
+
+--收藏表
+CREATE TABLE tb_collections(
+  user_no VARCHAR2(10) NOT NULL    --用户账号
+  CONSTRAINT tc_fk_tu REFERENCES tb_user(user_no),
+  goods_no INT NOT NULL    --商品编号
+  CONSTRAINT tc_fk_tg REFERENCES tb_goods(goods_no),
+  collect_date DATE DEFAULT SYSDATE,  --收藏时间
+  CONSTRAINT tc_pk PRIMARY KEY(user_no,goods_no)
+);
+
+--购物车表
+create table tb_shoppingcart(
+	user_no varchar2(10) not null,
+	goods_no int not null,
+	add_date date not null,
+	buy_count number(10,2) not null,
+	primary key(user_no,goods_no),
+	foreign key(user_no) references tb_user(user_no),
+	foreign key(goods_no) references tb_goods(goods_no)
+);
+
+
+--评价信息表
+create table tb_evaluate(
+	order_no int not null,
+	goods_no int not null,
+	evaluate_info varchar2(200),
+	evaluate_date date not null,
+	evaluate_picture blob,
+	evaluate_grade char(1) not null,
+	primary key(order_no,goods_no),
+	foreign key(order_no) references tb_order(order_no),
+	foreign key(goods_no) references tb_goods(goods_no)
+);

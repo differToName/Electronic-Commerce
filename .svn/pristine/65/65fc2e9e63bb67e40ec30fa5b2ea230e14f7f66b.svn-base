@@ -1,0 +1,6 @@
+function modifyPWD(){
+	var oldPWD=$("#oldManagerPassword").val();
+	var newPWD=$("#newManagerPassword").val();
+	var vertifyPWD=$("#vertifyPassword").val();
+	console.log(oldPWD);
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd" [
+<!ENTITY contextInclude SYSTEM "org/springframework/web/portlet/context/WEB-INF/contextInclude.xml">
+]>
+
+<beans>
+
+    <!-- Spring提供了一个数据源，类似连接池的功能 -->
+    <bean id="dataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource">    
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />  
+        <property name="url" value="jdbc:oracle:thin:@192.168.0.103:1521:orcl" />  
+        <property name="username" value="wanlong" />  
+        <property name="password" value="123456" />
+    </bean>
+    
+    <!-- hibernate session factory -->
+    <bean id="sessionFactory"
+		  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>	
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle10gDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>				
+			</props>
+		</property>
+		<property name="mappingResources">
+		   <list>
+		   	  <value>/com/brsc/ecommerceSys/domain/User.hbm.xml</value>
+		   	  <value>/com/brsc/ecommerceSys/domain/Manager.hbm.xml</value>
+		      <value>/com/brsc/ecommerceSys/domain/Order.hbm.xml</value>
+		      <value>/com/brsc/ecommerceSys/domain/GoodsClass.hbm.xml</value>
+		      <value>/com/brsc/ecommerceSys/domain/Goods.hbm.xml</value>
+		   </list>
+		</property>
+    </bean>
+        
+     <!-- 用户user -->
+     <bean id="userDao" class="com.brsc.ecommerceSys.dao.UserDaoSSHImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+     <bean id="userService" class="com.brsc.ecommerceSys.service.UserServiceSSHImpl">
+        <property name="userDao" ref="userDao"></property>
+     </bean>
+    
+     <bean id="UserAction" class="com.brsc.ecommerceSys.action.UserAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+     </bean>
+     
+
+     
+     <!-- 管理员 -->
+     <bean id="managerDao" class="com.brsc.ecommerceSys.dao.ManagerDaoSSHImpl">
+     	<property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+     <bean id="managerService" class="com.brsc.ecommerceSys.service.ManagerServiceSSHImpl">
+     	<property name="managerDao" ref="managerDao"></property>
+     </bean>
+     
+     <bean id="ManagerAction" class="com.brsc.ecommerceSys.action.ManagerAction" scope="prototype">
+     	<property name="managerService" ref="managerService"></property>
+     </bean>
+     
+     <!-- 登陆 -->
+     
+     <bean id="SecurityAction" class="com.brsc.ecommerceSys.action.SecurityAction" scope="protorype">
+     	<property name="userService" ref="userService"></property>
+     	<property name="managerService" ref="managerService"></property>
+     </bean>
+     
+     <!-- 商品类别 -->
+     <bean id="goodsClassDao" class="com.brsc.ecommerceSys.dao.GoodsClassDaoSSHImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+     <bean id="goodsClassService" class="com.brsc.ecommerceSys.service.GoodsClassServiceSSHImpl">
+        <property name="goodsClassDao" ref="goodsClassDao"></property>
+     </bean>
+    
+     <bean id="goodsClassAction" class="com.brsc.ecommerceSys.action.GoodsClassAction" scope="prototype">
+        <property name="goodsClassService" ref="goodsClassService"></property>
+     </bean>
+     
+     <!-- 商品类-->
+     <bean id="goodsDao" class="com.brsc.ecommerceSys.dao.GoodsDaoSSHImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+     <bean id="goodsService" class="com.brsc.ecommerceSys.service.GoodsServiceSSHImpl">
+        <property name="goodsDao" ref="goodsDao"></property>
+     </bean>
+    
+     <bean id="goodsAction" class="com.brsc.ecommerceSys.action.GoodsAction" scope="prototype">
+        <property name="goodsService" ref="goodsService"></property>
+     </bean>
+     
+     <!-- 订单类-->
+     <bean id="orderDao" class="com.brsc.ecommerceSys.dao.OrderDaoSSHImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     <bean id="orderService" class="com.brsc.ecommerceSys.service.OrderServiceImpl">
+        <property name="orderDao" ref="orderDao"></property>
+     </bean>
+     <bean id="orderAction" class="com.brsc.ecommerceSys.action.OrderAction" scope="prototype">
+        <property name="goodsService" ref="goodsService"></property>
+        <property name="userService" ref="userService"></property>
+        <property name="orderService" ref="orderService"></property>
+     </bean>
+</beans>

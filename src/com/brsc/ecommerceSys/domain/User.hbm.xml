@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.brsc.ecommerceSys.domain">
+
+   <class name="User" table="tb_user">
+      
+      <id name="userNo" type="java.lang.String" column="user_no">
+      		<generator class="native">         
+                <param name="sequence">seq_user_no</param>
+            </generator>
+          <!-- <generator class="native"></generator>  主键生成策略 -->
+      </id>
+      <property name="userName" column="user_name" type="java.lang.String" length="15" not-null="true"></property>
+      <property name="userPWD" column="user_password" type="java.lang.String" length="15" not-null="true"></property>
+      <property name="userRealName" column="user_realName" type="java.lang.String" length="10" not-null="true"></property>
+      <property name="userBirthday" column="user_birthday" type="date" not-null="true"></property>
+      <property name="userMailBox" column="user_mailbox" type="java.lang.String" length="20" not-null="true"></property>
+      <property name="userPhone" column="user_phone" type="java.lang.String" length="11" not-null="true"></property>
+      <property name="userAddress" column="user_address" type="java.lang.String" length="100" not-null="true"></property>
+      <property name="userPostCode" column="user_postcode" type="java.lang.String" length="6" not-null="true"></property>
+      <property name="userStatus" column="user_status" type="java.lang.String" length="1" not-null="true"></property>
+      <property name="userSex" column="user_sex" type="java.lang.String" length="1" not-null="true"></property>
+      
+   </class>
+
+</hibernate-mapping>

@@ -1,0 +1,31 @@
+/**
+ * 
+ */
+package com.brsc.ecommerceSys.dao;
+
+import java.util.List;
+
+import com.brsc.ecommerceSys.domain.GoodsClass;
+
+/**
+ * @author YuTian
+ *
+ */
+public interface GoodsClassDao {
+	
+	/**添加父商品类别*/
+	void addGoodsClass(GoodsClass goodsClass);
+	
+	/**加载所有父类别
+	 * 
+	 * @return 父类别列表
+	 */
+	List<GoodsClass> loadAllParentGoodsClass();
+	
+	/**加载所有类别
+	 * 
+	 * @return 所有类别列表
+	 */
+	List<GoodsClass> loadAll();
+	
+}

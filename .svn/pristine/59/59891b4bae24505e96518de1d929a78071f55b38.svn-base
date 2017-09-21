@@ -1,0 +1,62 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>订单修改</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
+  </head>
+  
+  <body>
+    <h4>编号为[${order.orderNo}]的订单修改</h4>
+    <s:form namespace="/order" action="updateOrder" method="post">
+      <s:hidden name="order.orderNo"></s:hidden>
+      <s:hidden name="order.user.userNo"></s:hidden>
+      
+      <s:hidden name="order.goods.goodsNo"></s:hidden>
+      <s:hidden name="order.auditStatu"></s:hidden>
+      
+      <s:hidden name="order.buyNumbers"></s:hidden>
+      <s:hidden name="order.buyCounts"></s:hidden>
+      <s:hidden name="order.orderStatus"></s:hidden>
+      
+    <div>
+    	<span>支付方式: </span>
+    	<s:radio name="order.payMethod" list="#{'Z':'支付宝','W':'微信','A':'网银'}"></s:radio>
+    </div>
+    <div>
+    	<span>收货地址: </span>
+    	<s:textfield name="order.deliveryAddress"></s:textfield>
+    </div>
+    <div>
+    	<span>收货人姓名: </span>
+    	<s:textfield name="order.goodsConsignee"></s:textfield>
+    </div>
+    <div>
+    	<span>收货电话: </span>
+    	<s:textfield name="order.consigneePhone"></s:textfield>
+    </div>
+    <div>
+        <s:submit value="信息修改"></s:submit>
+    </div>
+    </s:form>
+  </body>
+</html>

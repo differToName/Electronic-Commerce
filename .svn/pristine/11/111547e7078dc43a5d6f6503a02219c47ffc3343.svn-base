@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.action.extension" value="do"/>
+    <constant name="struts.i18n.encoding" value="UTF-8"/> 
+    <constant name="struts.ui.theme" value="simple"></constant>
+    <constant name="struts.objectFactory" value="spring" />
+    <constant name="struts.objectFactory.spring.autoWire" value="name" />
+
+    <package name="base-package" abstract="true" extends="struts-default">
+    
+    </package>
+    
+    <package name="user-package" namespace="/user" extends="base-package">
+    
+        <action name="toReg" class="com.brsc.ecommerceSys.action.UserAction" method="toReg">
+        	<result name="to_reg_user">../pages/user-mgr/reg_user.jsp</result>
+        </action>
+        
+        <action name="createUser" class="com.brsc.ecommerceSys.action.UserAction" method="createUser">
+        	<result name="to_list_users" type="redirectAction">loadUsers</result>
+        	<result name="to_reg_user">../pages/user-mgr/reg_user.jsp</result>
+        </action>
+        
+        <action name="loadUsers" class="com.brsc.ecommerceSys.action.UserAction" method="loadUsers">
+        	<result name="to_list_users">../pages/user-mgr/load_users.jsp</result>
+        </action>
+        
+         <action name="toChangeStatus" class="com.brsc.ecommerceSys.action.UserAction" method="toChangeStatus">
+        	<result name="to_list_users" type="redirectAction">loadUsers</result>
+        </action>
+        
+        <action name="updateUser" class="com.brsc.ecommerceSys.action.UserAction" method="updateUser">
+        	<result name="to_list_users" type="redirectAction">loadUsers</result>
+        </action>
+        <!-- 
+         
+        
+        <action name="loadClients" class="edu.fjut.fundMgrSys.action.ClientAction" method="loadClients">
+        	<result name="to_list_clients">../jsps/client/list_client.jsp</result>
+        </action>
+        
+        <action name="toUpdateClient" class="edu.fjut.fundMgrSys.action.ClientAction" method="toUpdateClient">
+        	<result name="to_update_client">../jsps/client/update_client.jsp</result>
+        </action>
+        
+        <action name="updateClient" class="edu.fjut.fundMgrSys.action.ClientAction" method="updateClient">
+        	<result name="to_list_clients" type="redirectAction">loadClients</result>
+        </action>
+        
+        <action name="lookDetailInfo" class="edu.fjut.fundMgrSys.action.ClientAction" method="lookDetailInfo">
+        	<result name="look_detail_info">../jsps/client/look_client_detail.jsp</result>
+        	<result name="error_page">../jsps/error.jsp</result>
+        </action>
+         -->
+    </package>
+    
+    <package name="goodsClass-package" namespace="/goodsClass" extends="base-package">
+    
+    	<action name="toReg" class="com.brsc.ecommerceSys.action.GoodsClassAction" method="toReg">
+    		<result name="to_reg_goodsClass">../pages/goodsClass-mgr/reg_goodsClass.jsp</result>
+    	</action>
+    	
+    	<action name="createGoodsClass" class="com.brsc.ecommerceSys.action.GoodsClassAction" method="createGoodsClass">
+    		<result name="to_list_goodsClass_action" type="redirectAction">listGoodsClass</result>
+    	</action>
+    	
+    	<action name="listGoodsClass" class="com.brsc.ecommerceSys.action.GoodsClassAction" method="listGoodsClass">
+    		<result name="to_list_goodsClass">../pages/goodsClass-mgr/list_goodsClass.jsp</result>
+    	</action>
+    </package>
+   
+    
+</struts>
+
+ 

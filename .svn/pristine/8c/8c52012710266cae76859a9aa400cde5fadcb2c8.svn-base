@@ -1,0 +1,150 @@
+package com.brsc.ecommerceSys.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import com.brsc.ecommerceSys.domain.User;
+import com.brsc.ecommerceSys.exception.ApplicationException;
+import com.brsc.ecommerceSys.helper.UserHelper;
+
+public class UserDaoSSHImpl extends HibernateDaoSupport implements UserDao {
+
+	@Override
+	public void addUser(User user) {
+		// TODO Auto-generated method stub
+		try {
+			this.getHibernateTemplate().save(user);
+		}catch(RuntimeException r){
+			System.out.println(r+"12345");
+			
+		}
+		catch (Exception e) {
+			
+			System.out.println();
+			throw new ApplicationException("该账号已经存在！");
+		}
+	}
+
+	@Override
+	public void deleteUser(String userNo) {
+		User user=(User)this.getHibernateTemplate().load(User.class, userNo);
+		this.getHibernateTemplate().delete(user);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		this.getHibernateTemplate().update(user);
+	}
+
+	@Override
+	public User checkUser(String userName, String userPWD) {
+		User user;
+		try {
+			user =(User)this.getHibernateTemplate().find("from User u where u.userName='"+userName+"' and u.userPWD='"+userPWD+"'").get(0);
+		} catch (Exception e) {
+			throw new ApplicationException("没有这个用户");
+		}
+		return user;
+	}
+
+	@Override
+	public List<User> loadUsers() {
+		return this.getHibernateTemplate().find("from User");
+		
+	}
+
+	@Override
+	public List<User> selectUsers(UserHelper userHelper) {
+		Session session=this.getSession();
+		Transaction trans=session.beginTransaction();
+		List<User> userList=new ArrayList<User>();
+		try {
+			DetachedCriteria detachedCriteria=this.genCriteriaByHelper(userHelper);
+			Criteria criteria = detachedCriteria.getExecutableCriteria(session);
+			userList=criteria.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			trans.rollback();
+		}
+		finally{
+			if(session.isOpen())
+				session.close();
+		}
+		return userList;
+	}
+
+	@Override
+	public Long cntUsersByHelper(UserHelper helper) {
+		
+		DetachedCriteria detachedCriteria=this.genCriteriaByHelper(helper);
+		detachedCriteria.setProjection(Projections.rowCount());
+		
+		Session session=this.getSession();
+		Transaction trans = session.beginTransaction();
+		long cnt=0;
+		try {
+			Criteria criteria=detachedCriteria.getExecutableCriteria(session);//绑定session
+			cnt=Long.parseLong(criteria.list().get(0).toString());
+			trans.commit();
+		} catch (HibernateException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			trans.rollback();
+		}finally{
+			if(session.isOpen())
+				session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public List<User> loadScopeUsersByHelper(UserHelper helper, int beginIdx, int fetchSize) {
+		Session session = this.getSession();
+		Transaction trans=session.beginTransaction();
+		List<User> userList=new ArrayList<User>();
+		try {
+			DetachedCriteria detachedCriteria=this.genCriteriaByHelper(helper);
+			Criteria criteria=detachedCriteria.getExecutableCriteria(session);//绑定session
+			userList=criteria.setFirstResult(beginIdx).setMaxResults(fetchSize).list();
+			trans.commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			trans.rollback();
+		}finally{
+			if(session.isOpen())
+				session.clear();
+		}
+		
+		return userList;
+	}
+
+	//获取离线DetachedCriteria组合查询
+	private DetachedCriteria genCriteriaByHelper(UserHelper helper){
+		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+		
+		if(StringUtils.isNotEmpty(helper.getUserName())){
+			criteria.add(Restrictions.like("userName", "%"+helper.getUserName()+"%"));
+		}
+		if(StringUtils.isNotEmpty(helper.getUserSex())){
+			criteria.add(Restrictions.eq("userSex", helper.getUserSex()));
+		}
+		if(StringUtils.isNotEmpty(helper.getUserStatus())){
+			criteria.add(Restrictions.eq("userStatus", helper.getUserStatus()));
+		}
+		criteria.addOrder(Order.asc("userNo"));
+		return criteria;
+	}
+	
+}

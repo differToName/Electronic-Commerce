@@ -1,0 +1,353 @@
+html, body{
+  font-family: 'Roboto', sans-serif;
+    font-size: 100%;
+    overflow-x: hidden;
+  background:#FFFFFF;
+}
+label{
+  font-weight: normal;
+}
+#body label{
+  color: #000;
+  font-size: 0.8725em;
+}
+body a{
+  transition:0.5s all;
+  -webkit-transition:0.5s all;
+  -moz-transition:0.5s all;
+  -o-transition:0.5s all;
+  -ms-transition:0.5s all;
+  background:#011D4A!mportant;
+}
+a:focus, a:active, a:hover ,a.dropdown-toggle{
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  text-decoration:none;
+}
+a {
+    background-color:none;
+}
+body p{
+  font-family: 'Roboto', sans-serif;
+}
+.page-container {
+  /*display: table;*/
+  /*overflow:hidden;*/
+  min-width: 1260px;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+/*  width: 100%;
+  height: 100%;*/
+  margin: 0px auto;
+
+}
+.left-content {
+    float: right;
+    width: 87%;
+
+}
+a.sidebar-icon:hover{
+  color:#fff;
+}
+.top_bg{
+  background: #252525;
+}
+.top_left h2{
+  display: block;
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #fff;
+}
+.header_top{
+  width: 83%;
+  padding: 15px 0px 5px;
+  margin: 0 auto;
+}
+.header-bg{
+  height: 100%;
+}
+.header_top .top-left a{
+  color: #ffffff;
+}
+.header-t{
+  padding: 1em 0;
+  width: 83%;
+  margin: 0 auto;
+  height: 100%;
+}
+.logo{
+  float: left;
+  margin: 1.5em 0;
+  border-right: 1px solid #ad9c9c;
+}
+.header_right{
+  float: right;
+}
+.sidebar-menu{
+  position: fixed;
+  float: left;
+  width: 230px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #b52e31;
+  color: #aaabae;
+  box-shadow: 0px 0px 10px 0px rgb(58, 41, 31);
+}
+.logo1{
+  width: 100%;
+  padding: 15px 14px 47px;
+  box-sizing: border-box;
+}
+.sidebar-icon{
+  margin-top: -2px;
+  border: 1px solid #252525;
+  text-align: right;
+  line-height: 1;
+  font-size: 19px;
+  padding: 8px 10px;
+  border-radius: 0px;
+  color: #fff;
+  background: #252525;
+  float: right;
+}
+#menu{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+}
+#menu li{
+  border-bottom: 1px ridge rgba(255,255,255,0.15);
+  position: relative;
+  padding: 0;
+}
+#menu li a{
+  font-style: normal;
+  font-weight: 400;
+  position: relative;
+  display: block;
+  padding: 13px 20px;
+  color: #fff;
+  white-space: nowrap;
+  z-index: 2;
+  /*font-size: 0.9em;*/
+  font-family: 'Roboto',sans-serif;
+  border:none;
+  border-left: 4px solid #b52e31;
+}
+#menu li ul{
+  padding: 0;
+  position: absolute;
+  visibility: hidden;
+  list-style:none;
+  left: 100%;
+  top: -1px;
+  background-color: #b52e31;
+  opacity: 0;
+  transition: opacity 0.1s linear;
+  border-top: 1px solid rgba(69, 74, 84, 0.7);
+}
+#menu li:hover > ul {
+  visibility: visible;
+  opacity: 1;
+}
+li#menu-mensagens,li#menu-arquivos {
+background-color:#00C6D7!important;
+}
+
+#menu li a:hover {
+  color: #ffffff;
+  background-color:#252525;
+  transition: color 250ms ease-in-out, background-color 250ms ease-in-out;
+   border-left: 4px solid #4A4A4A;
+}
+.header_right{
+  float: right;
+  width: 40%;
+}
+#loginContainer{
+  position: relative;
+}
+#loginButton{
+  display: inline-block;
+  position: relative;
+  z-index: 30;
+  cursor: pointer;
+}
+#loginButton span:hover{
+  background: #b52e31;
+  color: #fff;
+}
+.log{
+  float: right;
+  width: 19%;
+  margin: 5px 0;
+}
+.reg{
+  float: right;
+  width: 20%;
+  margin: 5px 0;
+}
+.reg a span{
+/*  vertical-align: middle;
+*/  font-size: 1em;
+  border: 1px solid #555;
+  padding: 2px 14px;
+  font-weight: 300;
+  text-decoration: none;
+  color: #252525;
+}
+#loginContainer a span{
+
+  display: block;
+  padding: 2px 14px;
+  border: 1px solid #555;
+  font-weight: 300;
+  color:#252525;
+
+}
+#loginBox{
+  position:absolute;
+  top: 44px;
+  right: 0px;
+  /*display:none;*/
+  z-index:9999;
+
+
+}
+
+#loginForm:after {
+  content: '';
+  position: absolute;
+  right: 25px;
+  top: -10px;
+  border-left:10px solid rgba(0, 0, 0, 0);
+  border-right:10px solid rgba(0, 0, 0, 0);
+  border-bottom: 10px solid #f0f0f0;
+}
+/* Login Form */
+#loginForm {
+   width: 300px;
+  background: #fff;
+  border: 1px solid #d6d6d6;
+}
+#loginForm fieldset{
+  margin: 0 0 15px 0;
+}
+fieldset#body{
+  padding: 15px 15px;
+  margin: 0;
+}
+#loginForm #body fieldset label{
+  display: block;
+  float: none;
+  margin: 0 0 6px 0;
+}
+#loginForm #login{
+  width: auto;
+  float: left;
+  background-color: #B52E31;
+  color: #fff;
+  font-size: 0.8725em;
+  padding: 8px 20px;
+  border: none;
+  margin: 0 12px 0 0;
+  cursor: pointer;
+
+}
+#loginForm input{
+  width: 92%;
+  border: 1px solid #DADADA;
+  color: #222;
+  background: #fff;
+  padding: 6px;
+  font-size: 0.8125em;
+}
+#loginForm span{
+  display: block;
+  padding: 0 0 15px 17px;
+}
+#loginForm span a{
+  color: #000;
+  font-size: 0.85em;
+  font-weight: 500;
+  background: none;
+  border: none;
+  box-shadow: none;
+
+}
+
+.content{
+  height: 500px;
+  border: 1px solid #000;
+}
+.page-container.sidebar-collapsed {
+  transition: all 100ms linear;
+  transition-delay: 300ms;
+}
+.page-container.sidebar-collapsed-back {
+  transition: all 100ms linear;
+}
+
+.page-container.sidebar-collapsed-back .sidebar-menu {
+  width: 230px;
+  transition: all 100ms ease-in-out;
+}
+/*.page-container.sidebar-collapsed .sidebar-menu {
+  width: 180px;
+  z-index: 999999999;
+}
+*/.page-container.sidebar-collapsed .sidebar-menu {
+  width:65px; 
+  transition: all 100ms ease-in-out;
+  transition-delay: 300ms;
+}
+
+.page-container.sidebar-collapsed .sidebar-icon {
+  transform: rotate(90deg);
+  transition: all 300ms ease-in-out;
+  margin-right: 0em;
+  margin-top: -8px;
+  color: #fff;
+  background: #252525;
+  border-radius: 0;
+}
+.page-container.sidebar-collapsed .logo {
+  padding: 21px 0;
+ /* height: 106px;*/
+  box-sizing: border-box;
+  transition: all 100ms ease-in-out;
+  transition-delay: 300ms;
+}
+
+.page-container.sidebar-collapsed #logo {
+    opacity: 0;
+    transition: all 200ms ease-in-out;
+    display: none;
+}
+.page-container.sidebar-collapsed #menu span {
+  opacity: 0;
+  transition: all 50ms linear;
+}
+.page-container.sidebar-collapsed-back #menu span {
+  opacity: 1;
+  transition: all 200ms linear;
+  transition-delay: 300ms;
+}
+
+
+.page-container.sidebar-collapsed .left-content {
+   float: right;
+   width: 97%;
+}
+
+.content{
+  padding:1em 2em 3em;
+}

@@ -1,0 +1,56 @@
+      var toggle = true;
+            
+      $(".sidebar-icon").click(function() {                
+        if (toggle)
+        {
+        $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+        $("#menu span").css({"position":"absolute"});
+        	
+        }
+        else
+        {
+        $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+        setTimeout(function() {
+          $("#menu span").css({"position":"relative"});
+        }, 400);
+        }
+        toggle = !toggle;
+       });
+
+//      var log = true;
+//
+//      $("#loginButton").click(function(){
+//        if (log) {
+//          $("#loginBox").css({"display":"block"});
+//        }
+//        else
+//        {
+//          $("#loginBox").css({"display":"none"});          
+//        }
+//        log=!log;
+//      });
+// 
+//      function stopPropagation(e) { 
+//      if (e.stopPropagation) 
+//      e.stopPropagation(); 
+//      else 
+//      e.cancelBubble = true; 
+//      } 
+//      $(document).bind('click',function(){ 
+//      $('#loginBox').css('display','none'); 
+//      }); 
+//
+//      $('#loginButton').bind('click',function(e){ 
+//      stopPropagation(e);});
+      $("#loginButton").on("click", function(e){
+    	    $("#loginBox").show();
+
+    	    $(document).one("click", function(){
+    	        $("#loginBox").hide();
+    	    });
+
+    	    e.stopPropagation();
+    	    });
+    	    $("#loginBox").on("click", function(e){
+    	    e.stopPropagation();
+    	    });

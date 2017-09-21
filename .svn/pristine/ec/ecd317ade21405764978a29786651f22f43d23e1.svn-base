@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.brsc.ecommerceSys.domain">
+
+   <class name="Manager" table="tb_Manager">
+      
+      <id name="managerNo" type="java.lang.String" column="manager_no">
+      		<generator class="native">         
+                <param name="sequence">seq_manager_no</param>
+            </generator>
+          <!-- <generator class="native"></generator>  主键生成策略 -->
+      </id>
+      <property name="managerName" column="manager_name" type="java.lang.String" length="15" not-null="true"></property>
+      <property name="managerPWD" column="manager_password" type="java.lang.String" length="15" not-null="true"></property>
+      <property name="managerRealName" column="manager_realName" type="java.lang.String" length="10" not-null="true"></property>
+      <property name="managerBirthday" column="manager_birthday" type="date" not-null="true"></property>
+      <property name="managerMaiBox" column="manager_maibox" type="java.lang.String" length="20" not-null="true"></property>
+      <property name="managerPhone" column="manager_phone" type="java.lang.String" length="11" not-null="true"></property>
+      <property name="managerAddress" column="manager_address" type="java.lang.String" length="100" not-null="true"></property>
+      <property name="managerPostCode" column="manager_postcode" type="java.lang.String" length="6" not-null="true"></property>
+      <property name="managerPosition" column="manager_position" type="java.lang.String" length="1" not-null="true"></property>
+      
+   </class>
+
+</hibernate-mapping>

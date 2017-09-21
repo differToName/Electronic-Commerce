@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd" [
+<!ENTITY contextInclude SYSTEM "org/springframework/web/portlet/context/WEB-INF/contextInclude.xml">
+]>
+
+<beans>
+
+    <!-- Spring提供了一个数据源，类似连接池的功能 -->
+    <bean id="dataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource">    
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />  
+        <property name="url" value="jdbc:oracle:thin:@192.168.1.123:1521:orcl" />  
+        <property name="username" value="tester" />  
+        <property name="password" value="abc123" />
+    </bean>
+    
+    <!-- hibernate session factory -->
+    <bean id="sessionFactory"
+		  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>	
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle10gDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>				
+			</props>
+		</property>
+		<property name="mappingResources">
+		   <list>
+		   	  <value>/com/brsc/ecommerceSys/domain/User.hbm.xml</value>
+		   	  <value>/com/brsc/ecommerceSys/domain/Manager.hbm.xml</value>
+		      <value>/com/brsc/ecommerceSys/domain/Order.hbm.xml</value>
+		      <value>/com/brsc/ecommerceSys/domain/GoodsClass.hbm.xml</value>
+		   </list>
+		</property>
+    </bean>
+        
+     <!-- 用户user -->
+     <bean id="userDao" class="com.brsc.ecommerceSys.dao.UserDaoSSHImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+     <bean id="userService" class="com.brsc.ecommerceSys.service.UserServiceSSHImpl">
+        <property name="userDao" ref="userDao"></property>
+     </bean>
+    
+     <bean id="UserAction" class="com.brsc.ecommerceSys.action.UserAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+     </bean>
+     
+     <!-- 管理员 -->
+     <bean id="managerDao" class="com.brsc.ecommerceSys.dao.ManagerDaoSSHImpl">
+     	<property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+     <bean id="managerService" class="com.brsc.ecommerceSys.service.ManagerServiceSSHImpl">
+     	<property name="managerDao" ref="managerDao"></property>
+     </bean>
+     
+     <bean id="ManagerAction" class="com.brsc.ecommerceSys.action.ManagerAction" scope="prototype">
+     	<property name="managerService" ref="managerService"></property>
+     </bean>
+     
+     <!-- 商品类别 -->
+     <bean id="goodsClassDao" class="com.brsc.ecommerceSys.dao.GoodsClassDaoSSHImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+     <bean id="goodsClassService" class="com.brsc.ecommerceSys.service.GoodsClassServiceSSHImpl">
+        <property name="goodsClassDao" ref="goodsClassDao"></property>
+     </bean>
+    
+     <bean id="goodsClassAction" class="com.brsc.ecommerceSys.action.GoodsClassAction" scope="prototype">
+        <property name="goodsClassService" ref="goodsClassService"></property>
+     </bean>
+     
+   <!--用户 -->
+   
+   	<!--  
+      <bean id="employeeDao" class="edu.fjut.fundMgrSys.dao.EmployeeDaoSSHImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+      <bean id="employeeService" class="edu.fjut.fundMgrSys.service.EmployeeServiceImpl">
+        <property name="employeeDao" ref="employeeDao"></property>
+     </bean>
+     <bean id="securityAction" class="edu.fjut.fundMgrSys.action.SecurityAction" scope="prototype">
+        <property name="employeeService" ref="employeeService"></property>
+     </bean>
+    
+<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<property name="triggers">
+		<list>
+			<ref bean="correctionCronTrigger-overTimer"/>
+		</list>
+	</property>
+</bean> 
+<bean id="correctionCronTrigger-overTimer" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+    <property name="jobDetail">  
+        <ref bean="correctionJobDetailFactory-overTimer"/>  
+    </property>  
+    <property name="cronExpression">  
+        <value>*/10 * * * * ?</value>  
+    </property>
+</bean>  
+<bean id="correctionJobDetailFactory-overTimer" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+    <property name="targetObject">  
+        <ref bean="springDSQ"/>  
+    </property>
+    <property name="targetMethod">  
+        <value>run</value>  
+    </property>         
+</bean>  
+<bean id="springDSQ" class="edu.fjut.fundMgrSys.utils.ChangFundPrice">
+	<property name="fundService" ref="fundService"></property>
+</bean>   
+-->
+</beans>

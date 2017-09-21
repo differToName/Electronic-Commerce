@@ -1,0 +1,60 @@
+/**
+ * 
+ */
+package com.brsc.ecommerceSys.action;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.brsc.ecommerceSys.domain.GoodsClass;
+import com.brsc.ecommerceSys.service.GoodsClassService;
+
+/**
+ * 商品类别
+ * @author YuTian
+ *
+ */
+public class GoodsClassAction extends BaseOfAction {
+	
+	private GoodsClassService goodsClassService = null;
+	private GoodsClass goodsClass = null;
+	private List<GoodsClass> goodsClassList = null;
+	
+	public List<GoodsClass> getGoodsClassList() {
+		return goodsClassList;
+	}
+	public void setGoodsClassList(List<GoodsClass> goodsClassList) {
+		this.goodsClassList = goodsClassList;
+	}
+	public GoodsClass getGoodsClass() {
+		return goodsClass;
+	}
+	public void setGoodsClass(GoodsClass goodsClass) {
+		this.goodsClass = goodsClass;
+	}
+	public void setGoodsClassService(GoodsClassService goodsClassService) {
+		this.goodsClassService = goodsClassService;
+	}
+	
+	public String toReg() throws Exception{
+		
+		goodsClassList = goodsClassService.loadAllParentGoodsClass();
+		
+		return "to_reg_goodsClass";
+	}
+	
+	public String createGoodsClass() throws Exception{
+		
+		goodsClassService.addGoodsClass(goodsClass);
+		
+		return "to_list_goodsClass_action";
+	}
+	
+	public String listGoodsClass() throws Exception{
+		
+		goodsClassList = goodsClassService.loadAll();
+		
+		return "to_list_goodsClass";
+	}
+
+}

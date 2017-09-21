@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="edu.fjut.fundMgrSys.domain">
+
+   <class name="FinancialAccount" table="financial_account">
+      <id name="accNo" type="int" column="acc_no">
+           <generator class="increment"></generator> <!-- 主键生成策略 -->
+      </id>
+      <property name="accAmount" type="double" column="acc_amount" not-null="true"></property>
+      <property name="accPWD" type="java.lang.String" length="6" column="acc_pwd" not-null="true"></property>
+      <property name="accStatus" type="java.lang.String" length="1" column="acc_status" not-null="true"></property>
+      <property name="createDate" type="java.sql.Date" column="created_date" not-null="true"></property>
+      <many-to-one name="client" class="Client" column="id_card_no"  unique="true"  fetch="join" lazy="false"/>
+      <set name="fundHoldingList" table="fund_holding" cascade="all" inverse="true" lazy="false">
+      	<key>
+      		<column name="acc_no" not-null="true"></column>
+      	</key>
+      	<one-to-many class="FundHolding"/>
+      </set>
+   </class>
+
+</hibernate-mapping>
